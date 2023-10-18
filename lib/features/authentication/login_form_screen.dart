@@ -24,11 +24,13 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
         // Form의 하위 항목인 모든 FormField를 저장한다.
         _formKey.currentState!.save();
 
-        // 스크린 이동
-        Navigator.of(context).push(
+        // 이전화면 삭제 후  스크린 이동
+        Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
             builder: (context) => const InterestsScreen(),
           ),
+          // ture 리턴 시 이전화면 유지, false 리턴 시 이전화면 삭제.
+          (route) => false,
         );
       }
     }
