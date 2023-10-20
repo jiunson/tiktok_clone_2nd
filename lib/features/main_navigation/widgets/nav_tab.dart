@@ -6,14 +6,17 @@ class NavTab extends StatelessWidget {
   final String text;
   final bool isSelected;
   final IconData icon;
+  final IconData selectedIcon;
   final Function onTap;
 
-  const NavTab(
-      {super.key,
-      required this.text,
-      required this.isSelected,
-      required this.icon,
-      required this.onTap});
+  const NavTab({
+    super.key,
+    required this.text,
+    required this.isSelected,
+    required this.selectedIcon,
+    required this.icon,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +31,10 @@ class NavTab extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min, // Column사이즈를 Child사이즈로 설정.
               children: [
-                FaIcon(icon, color: Colors.white),
+                FaIcon(
+                  isSelected ? selectedIcon : icon,
+                  color: Colors.white,
+                ),
                 Gaps.v5,
                 Text(text, style: const TextStyle(color: Colors.white)),
               ],
