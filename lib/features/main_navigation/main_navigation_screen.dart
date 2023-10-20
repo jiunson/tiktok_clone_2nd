@@ -14,15 +14,6 @@ class MainNavgationScreen extends StatefulWidget {
 class _MainNavgationScreenState extends State<MainNavgationScreen> {
   int _selectedIndex = 0;
 
-  // Tab 화면이동 시 각 화면의 상태를 유지해야 한다면, 화면을 폐기하지 않고 숨김처리해야 한다.
-  final screens = [
-    StfScreen(key: GlobalKey()),
-    StfScreen(key: GlobalKey()),
-    StfScreen(key: GlobalKey()),
-    StfScreen(key: GlobalKey()),
-    StfScreen(key: GlobalKey()),
-  ];
-
   void _onTap(int index) {
     setState(() {
       _selectedIndex = index;
@@ -32,7 +23,24 @@ class _MainNavgationScreenState extends State<MainNavgationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: screens[_selectedIndex],
+      body: Stack(children: [
+        Offstage(
+          offstage: _selectedIndex != 0,
+          child: const StfScreen(),
+        ),
+        Offstage(
+          offstage: _selectedIndex != 1,
+          child: const StfScreen(),
+        ),
+        Offstage(
+          offstage: _selectedIndex != 3,
+          child: const StfScreen(),
+        ),
+        Offstage(
+          offstage: _selectedIndex != 4,
+          child: const StfScreen(),
+        ),
+      ]),
       bottomNavigationBar: BottomAppBar(
         color: Colors.black,
         child: Padding(

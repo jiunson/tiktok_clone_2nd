@@ -1,9 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-/* 
-  App의 요구사항에 따라 
- */
 class StfScreen extends StatefulWidget {
   const StfScreen({super.key});
 
@@ -28,6 +24,7 @@ class _StfScreenState extends State<StfScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print('im built!');
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
