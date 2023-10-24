@@ -18,9 +18,15 @@ class VideoPost extends StatefulWidget {
   State<VideoPost> createState() => _VideoPostState();
 }
 
-class _VideoPostState extends State<VideoPost> {
+class _VideoPostState extends State<VideoPost>
+    with SingleTickerProviderStateMixin {
   final VideoPlayerController _videoPlayerController =
       VideoPlayerController.asset("assets/videos/video.MOV");
+  final Duration _animationDuration = const Duration(milliseconds: 200);
+
+  late final AnimationController _animationController;
+
+  bool _isPaused = false;
 
   void _onVideoChange() {
     if (_videoPlayerController.value.isInitialized) {
@@ -34,9 +40,14 @@ class _VideoPostState extends State<VideoPost> {
   void _onTogglePause() {
     if (_videoPlayerController.value.isPlaying) {
       _videoPlayerController.pause();
+      _animationController.reverse();
     } else {
       _videoPlayerController.play();
+      _animationController.forward();
     }
+    setState(() {
+      _isPaused = !_isPaused;
+    });
   }
 
   void _onVisibilityChanged(VisibilityInfo info) {
@@ -48,19 +59,34 @@ class _VideoPostState extends State<VideoPost> {
 
   void _initVideoPlayer() async {
     await _videoPlayerController.initialize();
-    setState(() {});
     _videoPlayerController.addListener(_onVideoChange);
+    setState(() {});
   }
 
   @override
   void initState() {
     super.initState();
     _initVideoPlayer();
+
+    // Play버튼 애니메이션 컨트롤러 설정
+    _animationController = AnimationController(
+      vsync: this, // ths SingleTickerProviderStateMixin
+      lowerBound: 1.0,
+      upperBound: 1.5,
+      value: 1.5,
+      duration: _animationDuration,
+    );
+
+    // 애니메이션 값이 변경할 때마다 화면을 갱신하여 애니메이션 처리를 부드럽게한다.
+    _animationController.addListener(() {
+      setState(() {});
+    });
   }
 
   @override
   void dispose() {
     _videoPlayerController.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
@@ -83,13 +109,20 @@ class _VideoPostState extends State<VideoPost> {
               onTap: _onTogglePause,
             ),
           ),
-          const Positioned.fill(
+          Positioned.fill(
             child: IgnorePointer(
               child: Center(
-                child: FaIcon(
-                  FontAwesomeIcons.play,
-                  color: Colors.white,
-                  size: Sizes.size52,
+                child: Transform.scale(
+                  scale: _animationController.value,
+                  child: AnimatedOpacity(
+                    opacity: _isPaused ? 1 : 0,
+                    duration: _animationDuration,
+                    child: const FaIcon(
+                      FontAwesomeIcons.play,
+                      color: Colors.white,
+                      size: Sizes.size52,
+                    ),
+                  ),
                 ),
               ),
             ),
