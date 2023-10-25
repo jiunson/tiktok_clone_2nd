@@ -68,19 +68,14 @@ class _VideoPostState extends State<VideoPost>
     super.initState();
     _initVideoPlayer();
 
-    // Play버튼 애니메이션 컨트롤러 설정
+    // Play버튼 애니메이션 설정
     _animationController = AnimationController(
-      vsync: this, // ths SingleTickerProviderStateMixin
+      vsync: this, // this -> SingleTickerProviderStateMixin
       lowerBound: 1.0,
       upperBound: 1.5,
       value: 1.5,
       duration: _animationDuration,
     );
-
-    // 애니메이션 값이 변경할 때마다 화면을 갱신하여 애니메이션 처리를 부드럽게한다.
-    _animationController.addListener(() {
-      setState(() {});
-    });
   }
 
   @override
@@ -112,8 +107,14 @@ class _VideoPostState extends State<VideoPost>
           Positioned.fill(
             child: IgnorePointer(
               child: Center(
-                child: Transform.scale(
-                  scale: _animationController.value,
+                child: AnimatedBuilder(
+                  animation: _animationController,
+                  builder: (context, child) {
+                    return Transform.scale(
+                      scale: _animationController.value,
+                      child: child,
+                    );
+                  },
                   child: AnimatedOpacity(
                     opacity: _isPaused ? 1 : 0,
                     duration: _animationDuration,
