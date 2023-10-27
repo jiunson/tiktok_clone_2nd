@@ -77,6 +77,7 @@ class _VideoPostState extends State<VideoPost>
     }
     await showModalBottomSheet(
       context: context,
+      isScrollControlled: true, // true : bottom sheet의 사이즈 변경 시 필수.
       backgroundColor: Colors.transparent, // 상단 라운드 처리를 위해 Modal 배경을 투명하게 설정한다.
       builder: (context) => const VideoComments(),
     );

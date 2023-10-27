@@ -38,6 +38,7 @@ class _MainNavgationScreenState extends State<MainNavgationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false, // 화면 키보드를 피하기 위해 자체 크기를 조정 설정
       backgroundColor: _selectedIndex == 0 ? Colors.black : Colors.white,
       body: Stack(children: [
         Offstage(
