@@ -59,6 +59,10 @@ class _VideoPostState extends State<VideoPost>
         !_videoPlayerController.value.isPlaying) {
       _videoPlayerController.play();
     }
+    // 다른 페이지에서 영상이 Play중이면
+    if (_videoPlayerController.value.isPlaying && info.visibleFraction == 0) {
+      _onTogglePause();
+    }
   }
 
   void _initVideoPlayer() async {
