@@ -65,8 +65,9 @@ class _ActivityScreenState extends State<ActivityScreen>
     setState(() {});
   }
 
-  void _onTitleTap() async {
+  void _toggleAnimations() async {
     if (_animationController.isCompleted) {
+      // 샐행완료 후 다음코드가 실행된다
       await _animationController.reverse();
     } else {
       _animationController.forward();
@@ -88,8 +89,9 @@ class _ActivityScreenState extends State<ActivityScreen>
     return Scaffold(
       appBar: AppBar(
         title: GestureDetector(
-          onTap: _onTitleTap,
+          onTap: _toggleAnimations,
           child: Row(
+            mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text("All activity"),
@@ -214,7 +216,7 @@ class _ActivityScreenState extends State<ActivityScreen>
             AnimatedModalBarrier(
               color: _barrierAnimation,
               dismissible: true,
-              onDismiss: _onTitleTap,
+              onDismiss: _toggleAnimations,
             ),
           SlideTransition(
             position: _panelAnimation,
