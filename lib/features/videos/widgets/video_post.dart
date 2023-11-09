@@ -53,6 +53,8 @@ class _VideoPostState extends State<VideoPost>
   }
 
   void _onVisibilityChanged(VisibilityInfo info) {
+    if (!mounted) return;
+
     // 가시성이 100%이고 일시정지가 아니며 영상이 Stop이면 영상을 Play한다.
     if (info.visibleFraction == 1 &&
         !_isPaused &&
