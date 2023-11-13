@@ -1,7 +1,23 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
+
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  bool _notifications = false;
+
+  void _onNotificationsChanged(bool? newValue) {
+    if (newValue == null) return;
+    setState(() {
+      _notifications = newValue;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,6 +27,18 @@ class SettingsScreen extends StatelessWidget {
       ),
       body: ListView(
         children: [
+          SwitchListTile(
+            value: _notifications,
+            onChanged: _onNotificationsChanged,
+            title: const Text("Enable notifications"),
+            subtitle: const Text("They will be cute."),
+          ),
+          CheckboxListTile(
+            value: _notifications,
+            onChanged: _onNotificationsChanged,
+            title: const Text("marketing emails"),
+            subtitle: const Text("We won't span you."),
+          ),
           ListTile(
             onTap: () async {
               final date = await showDatePicker(
@@ -51,6 +79,7 @@ class SettingsScreen extends StatelessWidget {
               debugPrint('$booking');
             },
             title: const Text("What is your birthday?"),
+            subtitle: const Text("I need to know!"),
           ),
           ListTile(
             onTap: () => showAboutDialog(
@@ -66,7 +95,10 @@ class SettingsScreen extends StatelessWidget {
             ),
             subtitle: const Text("About this app....."),
           ),
-          const AboutListTile(),
+          const AboutListTile(
+            applicationVersion: "1.0",
+            applicationLegalese: "Don't copy me.",
+          ),
         ],
       ),
     );
