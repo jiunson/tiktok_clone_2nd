@@ -53,6 +53,7 @@ class _VideoPostState extends State<VideoPost>
   }
 
   void _onVisibilityChanged(VisibilityInfo info) {
+    // VideoPost 위젯의 마운트 유무 체크
     if (!mounted) return;
 
     // 가시성이 100%이고 일시정지가 아니며 영상이 Stop이면 영상을 Play한다.
