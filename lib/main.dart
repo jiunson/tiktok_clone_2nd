@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tiktok_clone_2nd/constants/sizes.dart';
-import 'package:tiktok_clone_2nd/features/authentication/sign_up_screen.dart';
+import 'package:tiktok_clone_2nd/features/main_navigation/main_navigation_screen.dart';
 
 void main() async {
   // Flutter framework를 이용해서 앱이 시작하기 전에 state를 어떤 식으로든 바꾸고 싶다면
@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const SignUpScreen(),
+      home: const MainNavgationScreen(),
     );
   }
 }

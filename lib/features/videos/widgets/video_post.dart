@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone_2nd/constants/gaps.dart';
@@ -73,6 +74,11 @@ class _VideoPostState extends State<VideoPost>
         VideoPlayerController.asset("assets/videos/video.MOV");
     await _videoPlayerController.initialize();
     await _videoPlayerController.setLooping(true);
+    // 애플리케이션이 웹에서 실행되도록 컴파일된 경우 true인 상수.
+    if (kIsWeb) {
+      // 웹브라우저들은 음성이 있는 영상을 재생 시 에러발생하기 때문에 소리를 0으로 세팅.
+      await _videoPlayerController.setVolume(0);
+    }
     _videoPlayerController.addListener(_onVideoChange);
     setState(() {});
   }
