@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tiktok_clone_2nd/constants/sizes.dart';
-import 'package:tiktok_clone_2nd/features/authentication/sign_up_screen.dart';
+import 'package:tiktok_clone_2nd/features/settings/settings_screen.dart';
 
 void main() async {
   // Flutter framework를 이용해서 앱이 시작하기 전에 state를 어떤 식으로든 바꾸고 싶다면
@@ -33,6 +34,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale("en"),
+        Locale("ko"),
+        Locale("es"),
+      ],
       themeMode: ThemeMode.system,
       theme: ThemeData(
         useMaterial3: false,
@@ -82,7 +93,7 @@ class MyApp extends StatelessWidget {
           cursorColor: Color(0xFFE9435A),
         ),
       ),
-      home: const SignUpScreen(),
+      home: const SettingsScreen(),
     );
   }
 }
