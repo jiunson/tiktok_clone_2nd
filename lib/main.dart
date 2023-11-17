@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tiktok_clone_2nd/constants/sizes.dart';
-import 'package:tiktok_clone_2nd/features/main_navigation/main_navigation_screen.dart';
+import 'package:tiktok_clone_2nd/features/authentication/sign_up_screen.dart';
 
 void main() async {
   // Flutter framework를 이용해서 앱이 시작하기 전에 state를 어떤 식으로든 바꾸고 싶다면
@@ -35,6 +35,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       themeMode: ThemeMode.system,
       theme: ThemeData(
+        useMaterial3: false,
         textTheme: Typography.blackMountainView,
         brightness: Brightness.light,
         scaffoldBackgroundColor: Colors.white,
@@ -63,6 +64,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       darkTheme: ThemeData(
+        useMaterial3: false,
         textTheme: Typography.whiteMountainView,
         brightness: Brightness.dark,
         primaryColor: const Color(0xFFE9435A),
@@ -80,7 +82,7 @@ class MyApp extends StatelessWidget {
           cursorColor: Color(0xFFE9435A),
         ),
       ),
-      home: const MainNavgationScreen(),
+      home: const SignUpScreen(),
     );
   }
 }
