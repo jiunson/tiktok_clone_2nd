@@ -58,6 +58,9 @@ class MyApp extends StatelessWidget {
           labelColor: Colors.black,
           unselectedLabelColor: Colors.grey.shade500,
         ),
+        listTileTheme: const ListTileThemeData(
+          iconColor: Colors.black,
+        ),
       ),
       darkTheme: ThemeData(
         textTheme: Typography.whiteMountainView,
@@ -70,7 +73,9 @@ class MyApp extends StatelessWidget {
         appBarTheme: AppBarTheme(
           backgroundColor: Colors.grey.shade900,
         ),
-        tabBarTheme: const TabBarTheme(indicatorColor: Colors.white),
+        tabBarTheme: const TabBarTheme(
+          indicatorColor: Colors.white,
+        ),
         textSelectionTheme: const TextSelectionThemeData(
           cursorColor: Color(0xFFE9435A),
         ),
