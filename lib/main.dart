@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:tiktok_clone_2nd/constants/sizes.dart';
 import 'package:tiktok_clone_2nd/features/authentication/sign_up_screen.dart';
 
@@ -36,9 +35,8 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       themeMode: ThemeMode.system,
       theme: ThemeData(
-        textTheme: GoogleFonts.itimTextTheme(),
+        textTheme: Typography.blackMountainView,
         brightness: Brightness.light,
-        // 참고 : https://m2.material.io/design/typography/the-type-system.html#type-scale
         scaffoldBackgroundColor: Colors.white,
         primaryColor: const Color(0xFFE9435A),
         textSelectionTheme: const TextSelectionThemeData(
@@ -57,12 +55,14 @@ class MyApp extends StatelessWidget {
         ),
       ),
       darkTheme: ThemeData(
-        textTheme: GoogleFonts.itimTextTheme(
-            ThemeData(brightness: Brightness.dark).textTheme),
+        textTheme: Typography.whiteMountainView,
         brightness: Brightness.dark,
         scaffoldBackgroundColor: Colors.black,
         bottomAppBarTheme: BottomAppBarTheme(
           color: Colors.grey.shade900,
+        ),
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.grey.shade900,
         ),
         primaryColor: const Color(0xFFE9435A),
       ),
