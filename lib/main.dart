@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tiktok_clone_2nd/constants/sizes.dart';
-import 'package:tiktok_clone_2nd/features/settings/settings_screen.dart';
+import 'package:tiktok_clone_2nd/features/authentication/sign_up_screen.dart';
+
+// UI 번역 파일 임포트
+import 'package:flutter_gen/gen_l10n/intl_generated.dart';
 
 void main() async {
   // Flutter framework를 이용해서 앱이 시작하기 전에 state를 어떤 식으로든 바꾸고 싶다면
@@ -35,14 +38,14 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
+        AppLocalizations.delegate, // UI에 대한 번역 파일 설정
+        GlobalMaterialLocalizations.delegate, // Material 위젯에 대한 번역 파일 설정
+        GlobalCupertinoLocalizations.delegate, // Cupertino 위젯에 대한 번역 파일 설정
+        GlobalWidgetsLocalizations.delegate, // 일반 위젯에 대한 번역 파일 설정
       ],
       supportedLocales: const [
-        Locale("en"),
-        Locale("ko"),
-        Locale("es"),
+        Locale("en"), // 영어 설정
+        Locale("ko"), // 한국어 설정
       ],
       themeMode: ThemeMode.system,
       theme: ThemeData(
@@ -93,7 +96,7 @@ class MyApp extends StatelessWidget {
           cursorColor: Color(0xFFE9435A),
         ),
       ),
-      home: const SettingsScreen(),
+      home: const SignUpScreen(),
     );
   }
 }

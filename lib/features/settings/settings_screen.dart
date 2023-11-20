@@ -24,7 +24,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     // 기본 지원 언어를 하위 위젯에 강제 설정
     return Localizations.override(
       context: context,
-      locale: const Locale("ko"),
+      locale: const Locale("es"),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Settings'),
