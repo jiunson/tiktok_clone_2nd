@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tiktok_clone_2nd/constants/sizes.dart';
 import 'package:tiktok_clone_2nd/features/authentication/sign_up_screen.dart';
 
@@ -37,16 +36,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      localizationsDelegates: const [
-        AppLocalizations.delegate, // UI에 대한 번역 파일 설정
-        GlobalMaterialLocalizations.delegate, // Material 위젯에 대한 번역 파일 설정
-        GlobalCupertinoLocalizations.delegate, // Cupertino 위젯에 대한 번역 파일 설정
-        GlobalWidgetsLocalizations.delegate, // 일반 위젯에 대한 번역 파일 설정
-      ],
-      supportedLocales: const [
-        Locale("en"), // 영어 설정
-        Locale("ko"), // 한국어 설정
-      ],
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       themeMode: ThemeMode.system,
       theme: ThemeData(
         useMaterial3: false,
