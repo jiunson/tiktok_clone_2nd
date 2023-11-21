@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tiktok_clone_2nd/constants/sizes.dart';
-import 'package:tiktok_clone_2nd/features/main_navigation/main_navigation_screen.dart';
+import 'package:tiktok_clone_2nd/features/authentication/sign_up_screen.dart';
 import 'package:tiktok_clone_2nd/generated/l10n.dart';
 
 void main() async {
@@ -95,7 +95,7 @@ class MyApp extends StatelessWidget {
           cursorColor: Color(0xFFE9435A),
         ),
       ),
-      home: const MainNavgationScreen(),
+      home: const SignUpScreen(),
     );
   }
 }
