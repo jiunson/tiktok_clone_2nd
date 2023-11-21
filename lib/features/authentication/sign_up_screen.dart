@@ -9,19 +9,23 @@ import 'package:tiktok_clone_2nd/generated/l10n.dart';
 import 'package:tiktok_clone_2nd/utils.dart';
 
 class SignUpScreen extends StatelessWidget {
+  static const routeName = "/";
+
   const SignUpScreen({super.key});
 
   void _onLoginTab(BuildContext context) async {
-    final result = await Navigator.of(context).push(
+    /* final result = await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => const LoginScreen(),
       ),
-    );
+    ); */
+
+    final result = await Navigator.of(context).pushNamed(LoginScreen.routeName);
     debugPrint("$result");
   }
 
   void _onEmailTap(BuildContext context) {
-    Navigator.of(context).push(
+    /* Navigator.of(context).push(
       // MaterialPageRoute(
       //   builder: (context) => const UsernameScreen(),
       // ),
@@ -52,7 +56,9 @@ class SignUpScreen extends StatelessWidget {
           );
         },
       ),
-    );
+    ); */
+
+    Navigator.of(context).pushNamed(UsernameScreen.routeName);
   }
 
   @override
