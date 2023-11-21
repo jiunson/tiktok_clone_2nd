@@ -23,6 +23,7 @@ class SignUpScreen extends StatelessWidget {
 
     // final result = await Navigator.of(context).pushNamed(LoginScreen.routeName);
 
+    // Navigator2
     context.push(LoginScreen.routeName);
   }
 
@@ -62,7 +63,8 @@ class SignUpScreen extends StatelessWidget {
 
     // Navigator.of(context).pushNamed(UsernameScreen.routeName);
 
-    context.go(UsernameScreen.routeName);
+    // Navigator2
+    context.push(UsernameScreen.routeName);
   }
 
   @override
