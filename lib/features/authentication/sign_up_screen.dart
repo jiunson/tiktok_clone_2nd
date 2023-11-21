@@ -11,12 +11,13 @@ import 'package:tiktok_clone_2nd/utils.dart';
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
 
-  void _onLoginTab(BuildContext context) {
-    Navigator.of(context).push(
+  void _onLoginTab(BuildContext context) async {
+    final result = await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => const LoginScreen(),
       ),
     );
+    debugPrint("$result");
   }
 
   void _onEmailTap(BuildContext context) {
