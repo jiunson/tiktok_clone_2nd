@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tiktok_clone_2nd/constants/sizes.dart';
-import 'package:tiktok_clone_2nd/features/authentication/email_screen.dart';
-import 'package:tiktok_clone_2nd/features/authentication/login_screen.dart';
-import 'package:tiktok_clone_2nd/features/authentication/sign_up_screen.dart';
-import 'package:tiktok_clone_2nd/features/authentication/username_screen.dart';
 import 'package:tiktok_clone_2nd/generated/l10n.dart';
+import 'package:tiktok_clone_2nd/router.dart';
 
 void main() async {
   // Flutter framework를 이용해서 앱이 시작하기 전에 state를 어떤 식으로든 바꾸고 싶다면
@@ -36,7 +33,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // S.load(const Locale("en"));  // Locale 언어 강제 설정
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: router,
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       localizationsDelegates: const [
@@ -98,13 +96,6 @@ class MyApp extends StatelessWidget {
           cursorColor: Color(0xFFE9435A),
         ),
       ),
-      initialRoute: SignUpScreen.routeName,
-      routes: {
-        SignUpScreen.routeName: (context) => const SignUpScreen(),
-        UsernameScreen.routeName: (context) => const UsernameScreen(),
-        LoginScreen.routeName: (context) => const LoginScreen(),
-        EmailScreen.routeName: (context) => const EmailScreen(),
-      },
     );
   }
 }
