@@ -10,7 +10,8 @@ import 'package:tiktok_clone_2nd/generated/l10n.dart';
 import 'package:tiktok_clone_2nd/utils.dart';
 
 class SignUpScreen extends StatelessWidget {
-  static const routeName = "/";
+  static const routeName = "signUp";
+  static const routeURL = "/";
 
   const SignUpScreen({super.key});
 
@@ -24,7 +25,8 @@ class SignUpScreen extends StatelessWidget {
     // final result = await Navigator.of(context).pushNamed(LoginScreen.routeName);
 
     // Navigator2
-    context.push(LoginScreen.routeName);
+    // context.push(LoginScreen.routeURL);
+    context.pushNamed(LoginScreen.routeName);
   }
 
   void _onEmailTap(BuildContext context) {
@@ -64,7 +66,7 @@ class SignUpScreen extends StatelessWidget {
     // Navigator.of(context).pushNamed(UsernameScreen.routeName);
 
     // Navigator2
-    context.push(UsernameScreen.routeName);
+    context.pushNamed(UsernameScreen.routeName);
   }
 
   @override
@@ -72,7 +74,7 @@ class SignUpScreen extends StatelessWidget {
     // debugPrint(Localizations.localeOf(context).toString());
     return OrientationBuilder(
       builder: (context, orientation) {
-        debugPrint("$orientation");
+        // debugPrint("$orientation");
         return Scaffold(
           body: SafeArea(
             child: Padding(
