@@ -21,13 +21,20 @@ final router = GoRouter(
     ),
     GoRoute(
       path: EmailScreen.routeName,
-      builder: (context, state) => const EmailScreen(),
+      builder: (context, state) {
+        final args = state.extra as EmailScreenArgs; // Object로 매개변수 설정
+        return EmailScreen(username: args.username);
+      },
     ),
     GoRoute(
       path: "/users/:username", // path에 :변수 설정
       builder: (context, state) {
         final username = state.params['username'];
-        return UserProfileScreen(username: username!);
+        final tab = state.queryParams["show"]; // queryParam값(?show=likes) 설정
+        return UserProfileScreen(
+          username: username!,
+          tab: tab!,
+        );
       },
     ),
   ],

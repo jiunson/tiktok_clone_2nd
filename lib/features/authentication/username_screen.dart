@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone_2nd/constants/gaps.dart';
 import 'package:tiktok_clone_2nd/constants/sizes.dart';
 import 'package:tiktok_clone_2nd/features/authentication/email_screen.dart';
@@ -43,10 +44,17 @@ class _EmailScreenState extends State<UsernameScreen> {
       ),
     ); */
 
-    Navigator.pushNamed(
+    // Navigator1의 Parameter 전달방식
+    /* Navigator.pushNamed(
       context,
       EmailScreen.routeName,
       arguments: EmailScreenArgs(username: _username),
+    ); */
+
+    // Navigator2의 Parameter 전달방식
+    context.push(
+      EmailScreen.routeName,
+      extra: EmailScreenArgs(username: _username),
     );
   }
 
