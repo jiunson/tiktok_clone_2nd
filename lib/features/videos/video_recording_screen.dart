@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tiktok_clone_2nd/constants/gaps.dart';
 import 'package:tiktok_clone_2nd/constants/sizes.dart';
+import 'package:tiktok_clone_2nd/features/videos/video_preview_screen.dart';
 
 class VideoRecordingScreen extends StatefulWidget {
   const VideoRecordingScreen({super.key});
@@ -42,9 +43,17 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
 
     // 카메라 컨트롤러 생성, 0-후방카메라, 1-전방카메라
     _cameraController = CameraController(
-        cameras[_isSelfieMode ? 1 : 0], ResolutionPreset.ultraHigh);
+      cameras[_isSelfieMode ? 1 : 0],
+      ResolutionPreset.ultraHigh,
+      // 애뮬레이터에서는 소리가 활성화 된 채로 영상을 녹화하면 제대로 작동하니 않기 때문에 false 설정.
+      enableAudio: false,
+    );
 
     await _cameraController.initialize(); // 컨트롤러 초기화
+
+    // iOS에서 비디오 녹화 시 약간의 영상 지연이 발생을 방지하기 위해 성능상의 이유로 메서드를 호출한다.
+    // Android 및 Web에서는 작동하지 않는다.
+    await _cameraController.prepareForVideoRecording();
 
     _flashMode = _cameraController.value.flashMode; // flashMode 변수 초기화
   }
@@ -89,6 +98,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     super.dispose();
     _cameraController.dispose();
     _buttonAnimationController.dispose();
+    _progressAnimationController.dispose();
   }
 
   Future<void> _toggleSelfieMode() async {
@@ -103,14 +113,31 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     setState(() {});
   }
 
-  void _startRecording(TapDownDetails _) {
+  Future<void> _startRecording(TapDownDetails _) async {
+    if (_cameraController.value.isRecordingVideo) return;
+    await _cameraController.startVideoRecording();
+
     _buttonAnimationController.forward();
     _progressAnimationController.forward();
   }
 
-  void _stopRecording() {
+  Future<void> _stopRecording() async {
+    if (!_cameraController.value.isRecordingVideo) return;
+
     _buttonAnimationController.reverse();
     _progressAnimationController.reset();
+
+    final video = await _cameraController.stopVideoRecording();
+
+    if (!mounted) return;
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => VideoPreviewScreen(
+          video: video,
+        ),
+      ),
+    );
   }
 
   @override
@@ -207,6 +234,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
                         child: Stack(
                           alignment: Alignment.center,
                           children: [
+                            // 프로그래스
                             SizedBox(
                               width: Sizes.size80 + Sizes.size14,
                               height: Sizes.size80 + Sizes.size14,
@@ -216,6 +244,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
                                 value: _progressAnimationController.value,
                               ),
                             ),
+                            // 버튼
                             Container(
                               width: Sizes.size80,
                               height: Sizes.size80,
