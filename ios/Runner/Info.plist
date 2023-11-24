@@ -51,5 +51,9 @@
 	<string>your usage description here</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Privacy Photo Library</string>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_dartobservatory._tcp</string>
+	</array>
 </dict>
 </plist>

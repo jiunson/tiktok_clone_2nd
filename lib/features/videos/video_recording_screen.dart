@@ -15,9 +15,11 @@ class VideoRecordingScreen extends StatefulWidget {
 }
 
 class _VideoRecordingScreenState extends State<VideoRecordingScreen>
-    with TickerProviderStateMixin {
+    with TickerProviderStateMixin, WidgetsBindingObserver {
   bool _hasPermission = false;
   bool _isSelfieMode = false;
+  bool _appActivated = true; // App 활성화 유무
+
   late FlashMode _flashMode;
   late CameraController _cameraController;
 
@@ -36,6 +38,50 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     lowerBound: 0.0,
     upperBound: 1.0,
   );
+
+  @override
+  void initState() {
+    super.initState();
+    initPermissions();
+
+    // 지정된 객체를 바인딩 관찰자로 등록하여 이벤트 발생 시 바인딩 관찰자에게 알림이 전달된다.
+    WidgetsBinding.instance.addObserver(this);
+
+    // 프로그래스 애니메이션 이벤트 리스너
+    _progressAnimationController.addListener(() {
+      setState(() {});
+    });
+    _progressAnimationController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _stopRecording();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _cameraController.dispose();
+    _buttonAnimationController.dispose();
+    _progressAnimationController.dispose();
+  }
+
+  // 앱의 lifecyle을 시스템으로부터 알림을 받아 camera위젯을 handle한다.
+  @override
+  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+    debugPrint('$state');
+    if (!_hasPermission) return;
+    if (!_cameraController.value.isInitialized) return;
+
+    if (state == AppLifecycleState.paused) {
+      _cameraController.dispose();
+      _appActivated = false; // dispose된 위젯을 랜더트리에서 해당 위젯의 호출을 방지한다.
+    } else if (state == AppLifecycleState.resumed) {
+      await initCamera();
+      _appActivated = true; // App 활성화
+    }
+    setState(() {});
+  }
 
   Future<void> initCamera() async {
     // 사용 가능한 카메라 얻기
@@ -64,9 +110,11 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     final cameraPermission = await Permission.camera.request();
     final micPermission = await Permission.microphone.request();
 
+    // 카메라 권한 체크
     final cameraDenied =
         cameraPermission.isDenied || cameraPermission.isPermanentlyDenied;
 
+    // 마이크 권한 체크
     final micDenied =
         micPermission.isDenied || micPermission.isPermanentlyDenied;
 
@@ -77,33 +125,6 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     } else {
       // 권한오류 메시지 출력
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    initPermissions();
-
-    // 지정된 객체를 바인딩 관찰자로 등록하여 이벤트 발생 시 바인딩 관찰자에게 알림이 전달된다.
-    WidgetsBinding.instance.addObserver(this);
-
-    // 프로그래스 애니메이션 이벤트 리스너
-    _progressAnimationController.addListener(() {
-      setState(() {});
-    });
-    _progressAnimationController.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        _stopRecording();
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _cameraController.dispose();
-    _buttonAnimationController.dispose();
-    _progressAnimationController.dispose();
   }
 
   Future<void> _toggleSelfieMode() async {
@@ -189,8 +210,9 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
             : Stack(
                 alignment: Alignment.center,
                 children: [
-                  // 카메라 미리보기
-                  CameraPreview(_cameraController),
+                  if (_appActivated)
+                    // 카메라 미리보기
+                    CameraPreview(_cameraController),
                   // 카메라설정 버튼
                   Positioned(
                     top: Sizes.size20,
