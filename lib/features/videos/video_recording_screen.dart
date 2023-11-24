@@ -1,5 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tiktok_clone_2nd/constants/gaps.dart';
 import 'package:tiktok_clone_2nd/constants/sizes.dart';
@@ -82,10 +84,13 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     super.initState();
     initPermissions();
 
+    // 지정된 객체를 바인딩 관찰자로 등록하여 이벤트 발생 시 바인딩 관찰자에게 알림이 전달된다.
+    WidgetsBinding.instance.addObserver(this);
+
+    // 프로그래스 애니메이션 이벤트 리스너
     _progressAnimationController.addListener(() {
       setState(() {});
     });
-
     _progressAnimationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         _stopRecording();
@@ -135,7 +140,24 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
       MaterialPageRoute(
         builder: (context) => VideoPreviewScreen(
           video: video,
+          isPicked: false,
         ),
+      ),
+    );
+  }
+
+  Future<void> _onPickVideoPressed() async {
+    final video = await ImagePicker().pickVideo(
+      source: ImageSource.gallery,
+    );
+    if (video == null) return;
+
+    if (!mounted) return;
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => VideoPreviewScreen(video: video, isPicked: true),
       ),
     );
   }
@@ -223,39 +245,62 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
                       ],
                     ),
                   ),
-                  // 녹화버튼
+
                   Positioned(
                     bottom: Sizes.size40,
-                    child: GestureDetector(
-                      onTapDown: _startRecording,
-                      onTapUp: (details) => _stopRecording(),
-                      child: ScaleTransition(
-                        scale: _buttonAnimation,
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            // 프로그래스
-                            SizedBox(
-                              width: Sizes.size80 + Sizes.size14,
-                              height: Sizes.size80 + Sizes.size14,
-                              child: CircularProgressIndicator(
-                                color: Colors.red.shade400,
-                                strokeWidth: Sizes.size6,
-                                value: _progressAnimationController.value,
-                              ),
+                    width: MediaQuery.of(context)
+                        .size
+                        .width, // 오류방지를 위해 자식 Expanede위젯의 사이즈 지정.
+                    child: Row(
+                      children: [
+                        // 녹화버튼의 가운데 정렬을 위해 빈 공간 위젯을 넣어준다.
+                        const Spacer(),
+                        // 녹화버튼
+                        GestureDetector(
+                          onTapDown: _startRecording,
+                          onTapUp: (details) => _stopRecording(),
+                          child: ScaleTransition(
+                            scale: _buttonAnimation,
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                // 프로그래스
+                                SizedBox(
+                                  width: Sizes.size80 + Sizes.size14,
+                                  height: Sizes.size80 + Sizes.size14,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.red.shade400,
+                                    strokeWidth: Sizes.size6,
+                                    value: _progressAnimationController.value,
+                                  ),
+                                ),
+                                // 버튼
+                                Container(
+                                  width: Sizes.size80,
+                                  height: Sizes.size80,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.red.shade400,
+                                  ),
+                                ),
+                              ],
                             ),
-                            // 버튼
-                            Container(
-                              width: Sizes.size80,
-                              height: Sizes.size80,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.red.shade400,
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
+                        // 이미지 버튼
+                        Expanded(
+                          child: Container(
+                            alignment: Alignment.center,
+                            child: IconButton(
+                              onPressed: _onPickVideoPressed,
+                              icon: const FaIcon(
+                                FontAwesomeIcons.image,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
