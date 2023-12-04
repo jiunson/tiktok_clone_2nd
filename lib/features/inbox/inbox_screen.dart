@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone_2nd/constants/sizes.dart';
 import 'package:tiktok_clone_2nd/features/inbox/activity_screen.dart';
-import 'package:tiktok_clone_2nd/features/inbox/chat_detail_screen.dart';
 import 'package:tiktok_clone_2nd/features/inbox/chats_screen.dart';
 
 class InboxScreen extends StatefulWidget {
