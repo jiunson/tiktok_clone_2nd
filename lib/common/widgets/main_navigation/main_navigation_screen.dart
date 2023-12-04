@@ -7,6 +7,7 @@ import 'package:tiktok_clone_2nd/features/discover/discover_screen.dart';
 import 'package:tiktok_clone_2nd/features/inbox/inbox_screen.dart';
 import 'package:tiktok_clone_2nd/common/widgets/main_navigation/widgets/nav_tab.dart';
 import 'package:tiktok_clone_2nd/common/widgets/main_navigation/widgets/post_video_button.dart';
+import 'package:tiktok_clone_2nd/features/videos/video_recording_screen.dart';
 import 'package:tiktok_clone_2nd/features/videos/video_timeline_screen.dart';
 import 'package:tiktok_clone_2nd/users/user_profile_screen.dart';
 import 'package:tiktok_clone_2nd/utils.dart';
@@ -34,17 +35,18 @@ class _MainNavgationScreenState extends State<MainNavgationScreen> {
     "profile",
   ];
 
-  late int _selectedIndex = _tabs.indexOf(widget.tab);
+  late int _selectedIndex = _tabs.indexOf(widget.tab); // 선택된 Tab 인덱스.
 
   void _onTap(int index) {
     context.go("/${_tabs[index]}");
+
     setState(() {
       _selectedIndex = index;
     });
   }
 
   void _onPostVideoButtonTap() {
-    Navigator.of(context).push(
+    /* Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => Scaffold(
           appBar: AppBar(
@@ -53,7 +55,8 @@ class _MainNavgationScreenState extends State<MainNavgationScreen> {
         ),
         fullscreenDialog: true,
       ),
-    );
+    ); */
+    context.pushNamed(VideoRecordingScreen.routeName);
   }
 
   @override
