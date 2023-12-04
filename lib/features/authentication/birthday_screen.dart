@@ -31,16 +31,9 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
   }
 
   void _onNextTap() {
-    /* Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const InterestsScreen(),
-      ),
-      (route) => false,
-    ); */
-
-    // push후 뒤로 갈 수 없다.
-    context.pushReplacementNamed(InterestsScreen.routeName);
+    // push후 뒤로 갈 수 없다. pushReplacementNamed 또는 goNamed를 사용한다.
+    // context.pushReplacementNamed(InterestsScreen.routeName);
+    context.goNamed(InterestsScreen.routeName);
   }
 
   void _setTextFieldDate(DateTime date) {

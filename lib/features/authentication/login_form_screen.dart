@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone_2nd/constants/gaps.dart';
 import 'package:tiktok_clone_2nd/constants/sizes.dart';
 import 'package:tiktok_clone_2nd/features/authentication/widgets/form_button.dart';
@@ -25,13 +26,14 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
         _formKey.currentState!.save();
 
         // 이전화면 삭제 후  스크린 이동
-        Navigator.of(context).pushAndRemoveUntil(
+        /* Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
             builder: (context) => const InterestsScreen(),
           ),
           // ture 리턴 시 이전화면 유지, false 리턴 시 이전화면 삭제.
           (route) => false,
-        );
+        ); */
+        context.goNamed(InterestsScreen.routeName);
       }
     }
   }
