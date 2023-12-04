@@ -30,12 +30,15 @@ class SignUpScreen extends StatelessWidget {
   }
 
   void _onEmailTap(BuildContext context) {
+    // Navigator.of(context).pushNamed(UsernameScreen.routeName);
+
+    // 화면전환 애니메이션 적용하기
     /* Navigator.of(context).push(
       // MaterialPageRoute(
       //   builder: (context) => const UsernameScreen(),
       // ),
 
-      // 화면전환 애니메이션 변경하기
+      // 화면전환 애니메이션 설정
       PageRouteBuilder(
         transitionDuration: const Duration(seconds: 1),
         reverseTransitionDuration: const Duration(seconds: 1),
@@ -62,8 +65,6 @@ class SignUpScreen extends StatelessWidget {
         },
       ),
     ); */
-
-    // Navigator.of(context).pushNamed(UsernameScreen.routeName);
 
     // Navigator2
     context.pushNamed(UsernameScreen.routeName);

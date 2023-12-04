@@ -39,27 +39,11 @@ class _EmailScreenState extends State<UsernameScreen> {
 
   void _onNextTap() {
     if (_username.isEmpty) return;
-    /* Navigator.of(context).push(
+
+    Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => const EmailScreen(),
+        builder: (context) => EmailScreen(username: _username),
       ),
-    ); */
-
-    // Navigator1의 Parameter 전달방식
-    /* Navigator.pushNamed(
-      context,
-      EmailScreen.routeName,
-      arguments: EmailScreenArgs(username: _username),
-    ); */
-
-    // Navigator2의 Parameter 전달방식
-    /* context.push(
-      EmailScreen.routeURL,
-      extra: EmailScreenArgs(username: _username),
-    ); */
-    context.pushNamed(
-      EmailScreen.routeName,
-      extra: EmailScreenArgs(username: _username),
     );
   }
 
