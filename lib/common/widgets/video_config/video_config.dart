@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 
+//------------------------------------------------------------------------------
+// InheritedWidget을 이용한 State 관리법
+//------------------------------------------------------------------------------
+
+// Config 데이터를 앱 전체에 공유하는 클래스
 class VideoConfigData extends InheritedWidget {
   const VideoConfigData({
     super.key,
@@ -25,19 +30,22 @@ class VideoConfigData extends InheritedWidget {
   }
 }
 
-class VideoConfig extends StatefulWidget {
+// Config 데이터 및 수정메서드를 지원하는 클래스
+class VideoConfigForInheritedWidget extends StatefulWidget {
   final Widget child;
 
-  const VideoConfig({
+  const VideoConfigForInheritedWidget({
     super.key,
     required this.child,
   });
 
   @override
-  State<VideoConfig> createState() => _VideoConfigState();
+  State<VideoConfigForInheritedWidget> createState() =>
+      _VideoConfigForInheritedWidgetState();
 }
 
-class _VideoConfigState extends State<VideoConfig> {
+class _VideoConfigForInheritedWidgetState
+    extends State<VideoConfigForInheritedWidget> {
   bool autoMute = true;
 
   // 함수호출 시 rebulid되어 VideoConfigData를 새로운 데이터로 빌드된다.
@@ -56,3 +64,19 @@ class _VideoConfigState extends State<VideoConfig> {
     );
   }
 }
+
+// -----------------------------------------------------------------------------
+// ChangeNotifier를 이용한 State 관리법
+// -----------------------------------------------------------------------------
+class VideoConfig extends ChangeNotifier {
+  bool autoMute = false;
+
+  void toggleAutoMute() {
+    autoMute = !autoMute;
+
+    // 청취자에 알려준다.
+    notifyListeners();
+  }
+}
+
+final videoConfig = VideoConfig();
