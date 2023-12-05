@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 
-class VideoConfig extends InheritedWidget {
-  const VideoConfig({
+class VideoConfigData extends InheritedWidget {
+  const VideoConfigData({
     super.key,
+    required this.autoMute,
+    required this.toggleMuted,
     required super.child,
   });
 
   // custom code
-  final bool autoMute = false;
+  final bool autoMute;
+  final void Function() toggleMuted;
 
   // BuildContext에서 주어진 T유형의 가장 가까운 인스턴스를 리턴한다.
-  static VideoConfig of(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<VideoConfig>()!;
+  static VideoConfigData of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<VideoConfigData>()!;
   }
 
   // 프레임워크가 이 위젯을 rebuild 할지 말지를 정할 수 있게 해준다.
@@ -19,5 +22,37 @@ class VideoConfig extends InheritedWidget {
   @override
   bool updateShouldNotify(covariant InheritedWidget oldWidget) {
     return true;
+  }
+}
+
+class VideoConfig extends StatefulWidget {
+  final Widget child;
+
+  const VideoConfig({
+    super.key,
+    required this.child,
+  });
+
+  @override
+  State<VideoConfig> createState() => _VideoConfigState();
+}
+
+class _VideoConfigState extends State<VideoConfig> {
+  bool autoMute = false;
+
+  // 함수호출 시 rebulid되어 VideoConfigData를 새로운 데이터로 빌드된다.
+  void toggleMuted() {
+    setState(() {
+      autoMute = !autoMute;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return VideoConfigData(
+      autoMute: autoMute,
+      toggleMuted: toggleMuted,
+      child: widget.child,
+    );
   }
 }
