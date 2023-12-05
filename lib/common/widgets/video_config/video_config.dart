@@ -38,7 +38,7 @@ class VideoConfig extends StatefulWidget {
 }
 
 class _VideoConfigState extends State<VideoConfig> {
-  bool autoMute = false;
+  bool autoMute = true;
 
   // 함수호출 시 rebulid되어 VideoConfigData를 새로운 데이터로 빌드된다.
   void toggleMuted() {

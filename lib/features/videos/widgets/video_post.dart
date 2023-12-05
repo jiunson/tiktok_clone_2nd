@@ -166,6 +166,8 @@ class _VideoPostState extends State<VideoPost>
             ),
           ),
           Positioned(
+            left: 20,
+            top: 40,
             child: IconButton(
               onPressed: VideoConfigData.of(context).toggleMuted,
               icon: FaIcon(

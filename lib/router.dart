@@ -10,7 +10,7 @@ import 'package:tiktok_clone_2nd/features/onboarding/interests_screen.dart';
 import 'package:tiktok_clone_2nd/features/videos/video_recording_screen.dart';
 
 final router = GoRouter(
-  initialLocation: "/inbox", // 지정된 경로로 초기화.
+  initialLocation: "/inbox", // Home 지정, 지정된 경로로 초기화.
   routes: [
     GoRoute(
       name: SignUpScreen.routeName,
@@ -59,7 +59,7 @@ final router = GoRouter(
     GoRoute(
       path: VideoRecordingScreen.routeURL,
       name: VideoRecordingScreen.routeName,
-      // 화면전환 애니메이션 적용
+      // 아래에서 위로 화면전환 애니메이션 적용
       pageBuilder: (context, state) => CustomTransitionPage(
         child: const VideoRecordingScreen(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
