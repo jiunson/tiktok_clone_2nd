@@ -73,16 +73,18 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
 
   @override
   void dispose() {
-    super.dispose();
-    _cameraController.dispose();
     _buttonAnimationController.dispose();
     _progressAnimationController.dispose();
+    if (!_noCamera) {
+      _cameraController.dispose();
+    }
+    super.dispose();
   }
 
   // 앱의 lifecyle을 시스템으로부터 알림을 받아 camera위젯을 handle한다.
+  // App 활성화/비활성화에 따라 cameraController 객체 관리한다.
   @override
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
-    debugPrint('$state');
     if (!_hasPermission) return;
     if (!_cameraController.value.isInitialized) return;
 
@@ -227,6 +229,14 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
                     if (_appActivated)
                       // 카메라 미리보기
                       CameraPreview(_cameraController),
+                  // 닫기 버튼
+                  const Positioned(
+                    top: Sizes.size40,
+                    left: Sizes.size20,
+                    child: CloseButton(
+                      color: Colors.white,
+                    ),
+                  ),
                   if (!_noCamera)
                     // 카메라설정 버튼
                     Positioned(
