@@ -59,8 +59,6 @@ final router = GoRouter(
     GoRoute(
       path: VideoRecordingScreen.routeURL,
       name: VideoRecordingScreen.routeName,
-      // builder: (context, state) => const VideoRecordingScreen(),
-
       // 화면전환 애니메이션 적용
       pageBuilder: (context, state) => CustomTransitionPage(
         child: const VideoRecordingScreen(),
