@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:tiktok_clone_2nd/constants/gaps.dart';
 import 'package:tiktok_clone_2nd/constants/sizes.dart';
+import 'package:tiktok_clone_2nd/features/videos/view_models/playback_config_vm.dart';
 import 'package:tiktok_clone_2nd/features/videos/views/widgets/video_button.dart';
 import 'package:tiktok_clone_2nd/features/videos/views/widgets/video_comments.dart';
 import 'package:tiktok_clone_2nd/generated/l10n.dart';
@@ -31,6 +33,7 @@ class _VideoPostState extends State<VideoPost>
   late final AnimationController _animationController;
 
   bool _isPaused = false;
+  final bool _isMuted = false;
 
   void _onVideoChange() {
     if (_videoPlayerController.value.isInitialized) {
@@ -62,7 +65,10 @@ class _VideoPostState extends State<VideoPost>
     if (info.visibleFraction == 1 &&
         !_isPaused &&
         !_videoPlayerController.value.isPlaying) {
-      _videoPlayerController.play();
+      final autoplay = context.read<PlaybackConfigViewModel>().autoplay;
+      if (autoplay) {
+        _videoPlayerController.play();
+      }
     }
     // 다른 페이지에서 영상이 Play중이면
     if (_videoPlayerController.value.isPlaying && info.visibleFraction == 0) {
@@ -99,6 +105,18 @@ class _VideoPostState extends State<VideoPost>
     _onTogglePause();
   }
 
+  // 환경설정 Muted 값이 변경되면 호출되는 리스너 함수.
+  void _onPlaybackConfigChanged() {
+    // 위젯 트리에 마운트되었는지 체크
+    if (!mounted) return;
+    final muted = context.read<PlaybackConfigViewModel>().muted;
+    if (muted) {
+      _videoPlayerController.setVolume(0);
+    } else {
+      _videoPlayerController.setVolume(1);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -112,6 +130,11 @@ class _VideoPostState extends State<VideoPost>
       value: 1.5,
       duration: _animationDuration,
     );
+
+    // ViewModl리스너 함수 등록
+    context
+        .read<PlaybackConfigViewModel>()
+        .addListener(_onPlaybackConfigChanged);
   }
 
   @override
@@ -169,9 +192,13 @@ class _VideoPostState extends State<VideoPost>
             left: 20,
             top: 40,
             child: IconButton(
-              onPressed: () {},
-              icon: const FaIcon(
-                false
+              onPressed: () {
+                context
+                    .read<PlaybackConfigViewModel>()
+                    .setMuted(!context.read<PlaybackConfigViewModel>().muted);
+              },
+              icon: FaIcon(
+                context.watch<PlaybackConfigViewModel>().muted
                     ? FontAwesomeIcons.volumeOff
                     : FontAwesomeIcons.volumeHigh,
                 color: Colors.white,
