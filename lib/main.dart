@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:tiktok_clone_2nd/common/widgets/video_config/video_config.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tiktok_clone_2nd/constants/sizes.dart';
+import 'package:tiktok_clone_2nd/features/videos/repos/playback_config_repo.dart';
+import 'package:tiktok_clone_2nd/features/videos/view_models/playback_config_vm.dart';
 import 'package:tiktok_clone_2nd/generated/l10n.dart';
 import 'package:tiktok_clone_2nd/router.dart';
 
@@ -25,7 +27,21 @@ void main() async {
     SystemUiOverlayStyle.dark,
   );
 
-  runApp(const MyApp());
+  // MVVM Repository 초기화
+  final preferences = await SharedPreferences.getInstance();
+  final repository = PlaybackConfigrepository(preferences);
+
+  // MVVM ViewModel 세팅
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => PlaybackConfigViewModel(repository),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -35,72 +51,67 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // S.load(const Locale("en"));  // Locale 언어 강제 설정
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => VideoConfig()),
+    return MaterialApp.router(
+      routerConfig: router,
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
+      localizationsDelegates: const [
+        S.delegate, // UI에 대한 번역 파일 설정
+        GlobalMaterialLocalizations.delegate, // Material 위젯에 대한 번역 파일 설정
+        GlobalCupertinoLocalizations.delegate, // Cupertino 위젯에 대한 번역 파일 설정
+        GlobalWidgetsLocalizations.delegate, // 일반 위젯에 대한 번역 파일 설정
       ],
-      child: MaterialApp.router(
-        routerConfig: router,
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        localizationsDelegates: const [
-          S.delegate, // UI에 대한 번역 파일 설정
-          GlobalMaterialLocalizations.delegate, // Material 위젯에 대한 번역 파일 설정
-          GlobalCupertinoLocalizations.delegate, // Cupertino 위젯에 대한 번역 파일 설정
-          GlobalWidgetsLocalizations.delegate, // 일반 위젯에 대한 번역 파일 설정
-        ],
-        supportedLocales: const [
-          Locale("en"), // 영어 설정
-          Locale("ko"), // 한국어 설정
-        ],
-        themeMode: ThemeMode.system,
-        theme: ThemeData(
-          useMaterial3: false,
-          textTheme: Typography.blackMountainView,
-          brightness: Brightness.light,
-          scaffoldBackgroundColor: Colors.white,
-          primaryColor: const Color(0xFFE9435A),
-          textSelectionTheme: const TextSelectionThemeData(
-            cursorColor: Color(0xFFE9435A),
-          ),
-          splashColor: Colors.transparent,
-          appBarTheme: const AppBarTheme(
-            foregroundColor: Colors.black,
-            backgroundColor: Colors.white,
-            elevation: 0,
-            titleTextStyle: TextStyle(
-              color: Colors.black,
-              fontSize: Sizes.size16 + Sizes.size2,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          tabBarTheme: TabBarTheme(
-            indicatorColor: Colors.black,
-            labelColor: Colors.black,
-            unselectedLabelColor: Colors.grey.shade500,
-          ),
-          listTileTheme: const ListTileThemeData(
-            iconColor: Colors.black,
+      supportedLocales: const [
+        Locale("en"), // 영어 설정
+        Locale("ko"), // 한국어 설정
+      ],
+      themeMode: ThemeMode.system,
+      theme: ThemeData(
+        useMaterial3: false,
+        textTheme: Typography.blackMountainView,
+        brightness: Brightness.light,
+        scaffoldBackgroundColor: Colors.white,
+        primaryColor: const Color(0xFFE9435A),
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: Color(0xFFE9435A),
+        ),
+        splashColor: Colors.transparent,
+        appBarTheme: const AppBarTheme(
+          foregroundColor: Colors.black,
+          backgroundColor: Colors.white,
+          elevation: 0,
+          titleTextStyle: TextStyle(
+            color: Colors.black,
+            fontSize: Sizes.size16 + Sizes.size2,
+            fontWeight: FontWeight.w600,
           ),
         ),
-        darkTheme: ThemeData(
-          useMaterial3: false,
-          textTheme: Typography.whiteMountainView,
-          brightness: Brightness.dark,
-          primaryColor: const Color(0xFFE9435A),
-          scaffoldBackgroundColor: Colors.black,
-          bottomAppBarTheme: BottomAppBarTheme(
-            color: Colors.grey.shade900,
-          ),
-          appBarTheme: AppBarTheme(
-            backgroundColor: Colors.grey.shade900,
-          ),
-          tabBarTheme: const TabBarTheme(
-            indicatorColor: Colors.white,
-          ),
-          textSelectionTheme: const TextSelectionThemeData(
-            cursorColor: Color(0xFFE9435A),
-          ),
+        tabBarTheme: TabBarTheme(
+          indicatorColor: Colors.black,
+          labelColor: Colors.black,
+          unselectedLabelColor: Colors.grey.shade500,
+        ),
+        listTileTheme: const ListTileThemeData(
+          iconColor: Colors.black,
+        ),
+      ),
+      darkTheme: ThemeData(
+        useMaterial3: false,
+        textTheme: Typography.whiteMountainView,
+        brightness: Brightness.dark,
+        primaryColor: const Color(0xFFE9435A),
+        scaffoldBackgroundColor: Colors.black,
+        bottomAppBarTheme: BottomAppBarTheme(
+          color: Colors.grey.shade900,
+        ),
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.grey.shade900,
+        ),
+        tabBarTheme: const TabBarTheme(
+          indicatorColor: Colors.white,
+        ),
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: Color(0xFFE9435A),
         ),
       ),
     );
