@@ -7,7 +7,7 @@ import 'package:tiktok_clone_2nd/features/inbox/activity_screen.dart';
 import 'package:tiktok_clone_2nd/features/inbox/chat_detail_screen.dart';
 import 'package:tiktok_clone_2nd/features/inbox/chats_screen.dart';
 import 'package:tiktok_clone_2nd/features/onboarding/interests_screen.dart';
-import 'package:tiktok_clone_2nd/features/videos/video_recording_screen.dart';
+import 'package:tiktok_clone_2nd/features/videos/views/video_recording_screen.dart';
 
 final router = GoRouter(
   initialLocation: "/inbox", // Home 지정, 지정된 경로로 초기화.
