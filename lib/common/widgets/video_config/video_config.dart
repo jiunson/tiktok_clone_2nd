@@ -66,17 +66,23 @@ class _VideoConfigForInheritedWidgetState
 }
 
 // -----------------------------------------------------------------------------
-// ChangeNotifier를 이용한 State 관리법
+// ChangeNotifier를 이용한 State 관리법 (여러값)
 // -----------------------------------------------------------------------------
 class VideoConfig extends ChangeNotifier {
   bool autoMute = false;
-
   void toggleAutoMute() {
     autoMute = !autoMute;
 
-    // 청취자에 알려준다.
+    // 청취자(데이터 변경 사항을 듣고 있는 화면)에게 알린다.
+    // 청취자는 해당UI 부분만 rebuild된다.
     notifyListeners();
   }
 }
 
-final videoConfig = VideoConfig();
+// 전연 변수
+final videoConfigFoChangeNotifier = VideoConfig();
+
+// -----------------------------------------------------------------------------
+// ValueNotifier를 이용한 State 관리법 (단일값)
+// -----------------------------------------------------------------------------
+final videoConfig = ValueNotifier(false);

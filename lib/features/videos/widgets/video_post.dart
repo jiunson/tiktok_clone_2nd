@@ -32,7 +32,8 @@ class _VideoPostState extends State<VideoPost>
   late final AnimationController _animationController;
 
   bool _isPaused = false;
-  bool _autoMute = videoConfig.autoMute;
+  bool _autoMute = videoConfigFoChangeNotifier.autoMute;
+  bool _autoMuteValue = videoConfig.value;
 
   void _onVideoChange() {
     if (_videoPlayerController.value.isInitialized) {
@@ -115,9 +116,17 @@ class _VideoPostState extends State<VideoPost>
       duration: _animationDuration,
     );
 
+    // ChangeNotifier 리스너 등록
+    videoConfigFoChangeNotifier.addListener(() {
+      setState(() {
+        _autoMute = videoConfigFoChangeNotifier.autoMute;
+      });
+    });
+
+    // ValueNotifier 리스너 등록
     videoConfig.addListener(() {
       setState(() {
-        _autoMute = videoConfig.autoMute;
+        _autoMuteValue = videoConfig.value;
       });
     });
   }
@@ -177,9 +186,11 @@ class _VideoPostState extends State<VideoPost>
             left: 20,
             top: 40,
             child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                videoConfig.value = !videoConfig.value;
+              },
               icon: FaIcon(
-                _autoMute
+                _autoMuteValue
                     ? FontAwesomeIcons.volumeOff
                     : FontAwesomeIcons.volumeHigh,
                 color: Colors.white,

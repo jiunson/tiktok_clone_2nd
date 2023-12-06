@@ -31,14 +31,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
         children: [
           // AnimatedBuilder는 ChangeNorifer와 같이 사용된다. (공식문서 표기됨)
           AnimatedBuilder(
-            animation: videoConfig,
+            animation: videoConfigFoChangeNotifier,
             builder: (context, child) => SwitchListTile.adaptive(
-              value: videoConfig.autoMute,
+              value: videoConfigFoChangeNotifier.autoMute,
               onChanged: (value) {
-                videoConfig.toggleAutoMute();
+                videoConfigFoChangeNotifier.toggleAutoMute();
               },
               title: const Text("Mute video"),
-              subtitle: const Text("Videos will be muted by default."),
+              subtitle: const Text("Used ChangeNotifier"),
+            ),
+          ),
+          ValueListenableBuilder(
+            valueListenable: videoConfig,
+            builder: (context, value, child) => SwitchListTile(
+              value: value,
+              onChanged: (value) {
+                videoConfig.value = !videoConfig.value;
+              },
+              title: const Text("Mute video"),
+              subtitle: const Text("Used ValueNotifier"),
             ),
           ),
           SwitchListTile(
