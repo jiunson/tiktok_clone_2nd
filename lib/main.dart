@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tiktok_clone_2nd/constants/sizes.dart';
 import 'package:tiktok_clone_2nd/features/videos/repos/playback_config_repo.dart';
@@ -27,17 +27,16 @@ void main() async {
     SystemUiOverlayStyle.dark,
   );
 
-  // MVVM Repository 초기화
+  // Repository 초기화
   final preferences = await SharedPreferences.getInstance();
   final repository = PlaybackConfigrepository(preferences);
 
-  // MVVM ViewModel 세팅
+  // Riverpod 세팅
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => PlaybackConfigViewModel(repository),
-        ),
+    ProviderScope(
+      overrides: [
+        playbackConfigProvider
+            .overrideWith(() => PlaybackConfigViewModel(repository)),
       ],
       child: const MyApp(),
     ),
