@@ -52,6 +52,7 @@ class VideoTimelineScreenState extends ConsumerState<VideoTimelineScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // when 함수를 통해서 AsyncNotifier를 listen한다.
     return ref.watch(timelineProvider).when(
           // 로딩중일때
           loading: () => const Center(
