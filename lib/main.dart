@@ -31,7 +31,7 @@ void main() async {
   final preferences = await SharedPreferences.getInstance();
   final repository = PlaybackConfigrepository(preferences);
 
-  // Riverpod 세팅
+  // Riverpod Provider 세팅
   runApp(
     ProviderScope(
       overrides: [

@@ -8,6 +8,8 @@ class PlaybackConfigViewModel extends Notifier<PlaybackConfigModel> {
 
   PlaybackConfigViewModel(this._repository);
 
+  // 비즈니스 로직 작성.
+
   void setMuted(bool value) {
     _repository.setMuted(value);
     // Notifier에서는 state를 통해 데이터에 접근할 수 있다.
