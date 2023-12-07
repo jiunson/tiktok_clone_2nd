@@ -104,7 +104,6 @@ class VideoPostState extends ConsumerState<VideoPost>
     _onTogglePause();
   }
 
-  // 환경설정 Muted 값이 변경되면 호출되는 리스너 함수.
   void _onPlaybackConfigChanged() {
     // 위젯 트리에 마운트되었는지 체크
     if (!mounted) return;

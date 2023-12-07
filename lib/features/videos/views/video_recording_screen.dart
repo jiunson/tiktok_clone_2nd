@@ -85,6 +85,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
   // App 활성화/비활성화에 따라 cameraController 객체 관리한다.
   @override
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+    if (_noCamera) return; // iOS 시뮬레이터 오류 방지
     if (!_hasPermission) return;
     if (!_cameraController.value.isInitialized) return;
 
