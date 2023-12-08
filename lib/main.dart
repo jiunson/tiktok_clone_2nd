@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -6,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tiktok_clone_2nd/constants/sizes.dart';
 import 'package:tiktok_clone_2nd/features/videos/repos/playback_config_repo.dart';
 import 'package:tiktok_clone_2nd/features/videos/view_models/playback_config_vm.dart';
+import 'package:tiktok_clone_2nd/firebase_options.dart';
 import 'package:tiktok_clone_2nd/generated/l10n.dart';
 import 'package:tiktok_clone_2nd/router.dart';
 
@@ -15,12 +17,17 @@ void main() async {
   // runApp() 호출하기 전에 메서드를 호출해야 한다.
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Firebase 초기화
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   // 방향 고정
-  // await SystemChrome.setPreferredOrientations(
-  //   [
-  //     DeviceOrientation.portraitUp,
-  //   ],
-  // );
+  await SystemChrome.setPreferredOrientations(
+    [
+      DeviceOrientation.portraitUp,
+    ],
+  );
 
   // 모든 화면에 적용
   SystemChrome.setSystemUIOverlayStyle(

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "380094860543",
+    "project_id": "tiktok-jiun-zxc",
+    "storage_bucket": "tiktok-jiun-zxc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:380094860543:android:7065d6219444448fd2d0ca",
+        "android_client_info": {
+          "package_name": "com.example.tiktok_clone_2nd"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALZgBYI9lWOY7LBOWVCXpSFRQbL1VX81U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
