@@ -6,8 +6,16 @@ class AuthenticationRepository {
   // FirebaseAuth 초기화
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  bool get isLoggedIn => user != null;
+  bool get isLoggedIn => user != null; // 로그인 유무
   User? get user => _firebaseAuth.currentUser;
+
+  // 회원가입
+  Future<void> signUp(String email, String password) async {
+    await _firebaseAuth.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+  }
 }
 
 final authRepo = Provider((ref) => AuthenticationRepository());
