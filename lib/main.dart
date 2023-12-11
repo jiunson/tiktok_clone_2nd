@@ -50,15 +50,16 @@ void main() async {
   );
 }
 
-class MyApp extends StatelessWidget {
+// porvider를 지켜보기 위해 ConsumerWidget으로 감싼다.
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // S.load(const Locale("en"));  // Locale 언어 강제 설정
     return MaterialApp.router(
-      routerConfig: router,
+      routerConfig: ref.watch(routerProvider), // provider로 router를 지켜본다.
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       localizationsDelegates: const [
