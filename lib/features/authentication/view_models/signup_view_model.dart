@@ -16,7 +16,7 @@ class SignUpViewModel extends AsyncNotifier<void> {
     state = const AsyncValue.loading(); // 로딩중 설정
     final form = ref.read(signUpForm);
     state = await AsyncValue.guard(
-      () async => await _authRepo.signUp(
+      () async => await _authRepo.emailSignUp(
         form["email"],
         form["password"],
       ),
@@ -24,9 +24,10 @@ class SignUpViewModel extends AsyncNotifier<void> {
   }
 }
 
-// 앱에서 수정할 수 있는 회원가입계정 value를 expose한다.
+// 앱 전체에서 접근할 수 있는 회원가입계정 value를 expose한다.
 final signUpForm = StateProvider((ref) => {});
 
+// 앱 전체에서 SignUpViewModel을 접근할 수 있도록 Object를 expose한다.
 final signUpPovider = AsyncNotifierProvider<SignUpViewModel, void>(
   () => SignUpViewModel(),
 );

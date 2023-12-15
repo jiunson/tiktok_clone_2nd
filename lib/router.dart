@@ -14,7 +14,7 @@ import 'package:tiktok_clone_2nd/features/videos/views/video_recording_screen.da
 // ref에 접근하기 위해 Provider로 감싼다.
 final routerProvider = Provider((ref) {
   return GoRouter(
-    initialLocation: "/inbox", // Home 지정, 지정된 경로로 초기화.
+    initialLocation: "/home", // Home 지정, 지정된 경로로 초기화.
     redirect: (context, state) {
       // state 값에 따라 User를 redirect시킨다.
       final isLoggedIn = ref.read(authRepo).isLoggedIn;
