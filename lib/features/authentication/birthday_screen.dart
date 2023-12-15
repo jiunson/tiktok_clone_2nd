@@ -36,7 +36,7 @@ class _BirthdayScreenState extends ConsumerState<BirthdayScreen> {
     // context.goNamed(InterestsScreen.routeName);
 
     // 계정 생성
-    ref.read(signUpPovider.notifier).signUp();
+    ref.read(signUpPovider.notifier).signUp(context);
   }
 
   void _setTextFieldDate(DateTime date) {

@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tiktok_clone_2nd/constants/gaps.dart';
 import 'package:tiktok_clone_2nd/constants/sizes.dart';
 import 'package:tiktok_clone_2nd/features/authentication/widgets/form_button.dart';
-import 'package:tiktok_clone_2nd/features/onboarding/interests_screen.dart';
 
-class LoginFormScreen extends StatefulWidget {
+class LoginFormScreen extends ConsumerStatefulWidget {
   const LoginFormScreen({super.key});
 
   @override
-  State<LoginFormScreen> createState() => _LoginFormScreenState();
+  ConsumerState<LoginFormScreen> createState() => _LoginFormScreenState();
 }
 
-class _LoginFormScreenState extends State<LoginFormScreen> {
+class _LoginFormScreenState extends ConsumerState<LoginFormScreen> {
   // 양식을 식별하고 입력을 검증하는데 사용한다.
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -25,7 +24,7 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
         // Form의 하위 항목인 모든 FormField를 저장한다.
         _formKey.currentState!.save();
 
-        // 이전화면 삭제 후  스크린 이동
+        // 이전화면을 Stact에서 삭제 후  스크린 이동
         /* Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
             builder: (context) => const InterestsScreen(),
@@ -33,7 +32,7 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
           // ture 리턴 시 이전화면 유지, false 리턴 시 이전화면 삭제.
           (route) => false,
         ); */
-        context.goNamed(InterestsScreen.routeName);
+        // context.goNamed(InterestsScreen.routeName);
       }
     }
   }

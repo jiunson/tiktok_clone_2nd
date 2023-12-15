@@ -23,6 +23,13 @@ class AuthenticationRepository {
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
   }
+
+  Future<void> signIn(String email, String password) async {
+    await _firebaseAuth.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+  }
 }
 
 // 앱 전체에서 접근할 수 있도록 Provider로 Repository를 노출한다.

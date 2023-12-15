@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tiktok_clone_2nd/features/authentication/repos/authentication_repo.dart';
 
@@ -12,7 +13,8 @@ class SignUpViewModel extends AsyncNotifier<void> {
     _authRepo = ref.read(authRepo);
   }
 
-  Future<void> signUp() async {
+  // 회원가입
+  Future<void> signUp(BuildContext context) async {
     state = const AsyncValue.loading(); // 로딩중 설정
     final form = ref.read(signUpForm);
     state = await AsyncValue.guard(
@@ -21,6 +23,8 @@ class SignUpViewModel extends AsyncNotifier<void> {
         form["password"],
       ),
     );
+    if (state.hasError) {
+    } else {}
   }
 }
 
