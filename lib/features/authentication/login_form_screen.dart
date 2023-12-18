@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tiktok_clone_2nd/constants/gaps.dart';
 import 'package:tiktok_clone_2nd/constants/sizes.dart';
+import 'package:tiktok_clone_2nd/features/authentication/view_models/login_view_model.dart';
 import 'package:tiktok_clone_2nd/features/authentication/widgets/form_button.dart';
 
 class LoginFormScreen extends ConsumerStatefulWidget {
@@ -33,6 +34,12 @@ class _LoginFormScreenState extends ConsumerState<LoginFormScreen> {
           (route) => false,
         ); */
         // context.goNamed(InterestsScreen.routeName);
+
+        ref.read(loginProvider.notifier).login(
+              formData["email"]!,
+              formData["password"]!,
+              context,
+            );
       }
     }
   }
@@ -108,7 +115,9 @@ class _LoginFormScreenState extends ConsumerState<LoginFormScreen> {
               Gaps.v28,
               GestureDetector(
                 onTap: _onSubmitTap,
-                child: const FormButton(disabled: false),
+                child: FormButton(
+                  disabled: ref.watch(loginProvider).isLoading,
+                ),
               ),
             ],
           ),

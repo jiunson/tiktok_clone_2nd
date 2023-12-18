@@ -9,6 +9,7 @@ class AuthenticationRepository {
   bool get isLoggedIn => user != null; // 로그인 유무
   User? get user => _firebaseAuth.currentUser;
 
+  // 유저의 로그인 상태를 실시간으로 감지한다.
   Stream<User?> authStateChanges() => _firebaseAuth.authStateChanges();
 
   // 회원가입
@@ -24,6 +25,7 @@ class AuthenticationRepository {
     await _firebaseAuth.signOut();
   }
 
+  // 로그인
   Future<void> signIn(String email, String password) async {
     await _firebaseAuth.signInWithEmailAndPassword(
       email: email,
@@ -35,7 +37,7 @@ class AuthenticationRepository {
 // 앱 전체에서 접근할 수 있도록 Provider로 Repository를 노출한다.
 final authRepo = Provider((ref) => AuthenticationRepository());
 
-// 앱 전체에서 접근할 수 있도록 StreamProvider를 노출한다.
+// 실시간으로 앱 UI에 로그인상태를 전달할 수 있도록 StreamProvider를 노출한다.
 final authState = StreamProvider((ref) {
   final repo = ref.read(authRepo);
   return repo.authStateChanges();

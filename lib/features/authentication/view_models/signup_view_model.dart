@@ -2,7 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone_2nd/features/authentication/repos/authentication_repo.dart';
+import 'package:tiktok_clone_2nd/features/onboarding/interests_screen.dart';
+import 'package:tiktok_clone_2nd/utils.dart';
 
 class SignUpViewModel extends AsyncNotifier<void> {
   late final AuthenticationRepository _authRepo;
@@ -23,8 +26,16 @@ class SignUpViewModel extends AsyncNotifier<void> {
         form["password"],
       ),
     );
+
+    // 아래 에러 방지
+    // Don't use 'BuildContext's across async gaps. Try rewriting the code to not reference the 'BuildContext'.
+    if (!context.mounted) return;
+
     if (state.hasError) {
-    } else {}
+      showFirebaseErrorSnack(context, state.error);
+    } else {
+      context.goNamed(InterestsScreen.routeName);
+    }
   }
 }
 
