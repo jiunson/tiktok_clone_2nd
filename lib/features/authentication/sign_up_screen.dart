@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone_2nd/constants/gaps.dart';
 import 'package:tiktok_clone_2nd/constants/sizes.dart';
 import 'package:tiktok_clone_2nd/features/authentication/login_screen.dart';
 import 'package:tiktok_clone_2nd/features/authentication/username_screen.dart';
+import 'package:tiktok_clone_2nd/features/authentication/view_models/social_auth_view_model.dart';
 import 'package:tiktok_clone_2nd/features/authentication/widgets/auth_button.dart';
 import 'package:tiktok_clone_2nd/generated/l10n.dart';
 import 'package:tiktok_clone_2nd/utils.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends ConsumerWidget {
   static const routeName = "signUp";
   static const routeURL = "/";
 
@@ -77,7 +79,7 @@ class SignUpScreen extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // debugPrint(Localizations.localeOf(context).toString());
     return OrientationBuilder(
       builder: (context, orientation) {
@@ -121,9 +123,14 @@ class SignUpScreen extends StatelessWidget {
                       ),
                     ),
                     Gaps.v16,
-                    AuthButton(
-                      icon: const FaIcon(FontAwesomeIcons.apple),
-                      text: S.of(context).appleButton,
+                    GestureDetector(
+                      onTap: () => ref
+                          .read(socialAuthProvider.notifier)
+                          .githubSignIn(context),
+                      child: const AuthButton(
+                        text: "Continue with Github",
+                        icon: FaIcon(FontAwesomeIcons.github),
+                      ),
                     ),
                   ],
                   // 가로 방향일 경우 UI

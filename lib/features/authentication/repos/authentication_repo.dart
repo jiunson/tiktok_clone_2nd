@@ -32,6 +32,11 @@ class AuthenticationRepository {
       password: password,
     );
   }
+
+  // Github 로그인
+  Future<void> githubSignIn() async {
+    await _firebaseAuth.signInWithProvider(GithubAuthProvider());
+  }
 }
 
 // 앱 전체에서 접근할 수 있도록 Provider로 Repository를 노출한다.
