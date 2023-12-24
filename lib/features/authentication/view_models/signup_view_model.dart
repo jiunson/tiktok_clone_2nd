@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone_2nd/features/authentication/repos/authentication_repo.dart';
 import 'package:tiktok_clone_2nd/features/onboarding/interests_screen.dart';
+import 'package:tiktok_clone_2nd/features/users/view_models/users_view_model.dart';
 import 'package:tiktok_clone_2nd/utils.dart';
 
 class SignUpViewModel extends AsyncNotifier<void> {
@@ -20,12 +21,18 @@ class SignUpViewModel extends AsyncNotifier<void> {
   Future<void> signUp(BuildContext context) async {
     state = const AsyncValue.loading(); // 로딩중 설정
     final form = ref.read(signUpForm);
-    state = await AsyncValue.guard(
-      () async => await _authRepo.emailSignUp(
+    final users = ref.read(usersProvider.notifier);
+    state = await AsyncValue.guard(() async {
+      // 계정을 Authentication 데이터베이스에 생성한다.
+      final userCredential = await _authRepo.emailSignUp(
         form["email"],
         form["password"],
-      ),
-    );
+      );
+      // 유저 계정이 생성되면 프로필을 Firestore에 생성한다.
+      if (userCredential.user != null) {
+        await users.createAccount(userCredential);
+      }
+    });
 
     // 아래 에러 방지
     // Don't use 'BuildContext's across async gaps. Try rewriting the code to not reference the 'BuildContext'.
