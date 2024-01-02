@@ -30,7 +30,7 @@ class SignUpViewModel extends AsyncNotifier<void> {
       );
       // 유저 계정이 생성되면 프로필을 Firestore에 생성한다.
       if (userCredential.user != null) {
-        await users.createAccount(userCredential);
+        await users.createProfile(userCredential);
       }
     });
 

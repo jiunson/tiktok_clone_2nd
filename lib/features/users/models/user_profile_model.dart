@@ -19,4 +19,15 @@ class UserProfileModel {
         name = "",
         bio = "",
         link = "";
+
+  // Firesotre 저장을 위한 Json 변환함수.
+  Map<String, String> toJson() {
+    return {
+      "uid": uid,
+      "email": email,
+      "name": name,
+      "bio": bio,
+      "link": link,
+    };
+  }
 }
