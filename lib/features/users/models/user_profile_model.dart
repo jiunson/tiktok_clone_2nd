@@ -20,7 +20,15 @@ class UserProfileModel {
         bio = "",
         link = "";
 
-  // Firesotre 저장을 위한 Json 변환함수.
+  // Json 데이타를 객체로 변환한다.
+  UserProfileModel.fromJson(Map<String, dynamic> json)
+      : uid = json["uid"],
+        email = json["email"],
+        name = json["name"],
+        bio = json["bio"],
+        link = json["link"];
+
+  // Firesotre 저장을 위한 Json 변환한다.
   Map<String, String> toJson() {
     return {
       "uid": uid,
