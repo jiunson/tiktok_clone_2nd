@@ -12,6 +12,9 @@ class UsersViewModel extends AsyncNotifier<UserProfileModel> {
   // 사용자 프로필을 초기화 한다.
   @override
   FutureOr<UserProfileModel> build() async {
+    // Test용 딜레이 코드
+    await Future.delayed(const Duration(seconds: 10));
+
     // UserRepository 초기화
     _usersRepository = ref.read(userRepo);
     _authenticationRepository = ref.read(authRepo);
