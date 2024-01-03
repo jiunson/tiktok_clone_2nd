@@ -17,6 +17,7 @@ class AvatarViewModel extends AsyncNotifier<void> {
   // 아바타 이미지를 업로드한다.
   Future<void> uploadAvatar(File file) async {
     state = const AsyncValue.loading();
+
     final fileName = ref.read(authRepo).user!.uid; // 사용자 ID로 파일명 설정한다.
     state = await AsyncValue.guard(() async {
       // Firebase Storage에 아바타 이미지 업로드

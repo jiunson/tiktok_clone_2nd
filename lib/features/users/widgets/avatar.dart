@@ -53,7 +53,10 @@ class Avatar extends ConsumerWidget {
               radius: 50,
               foregroundImage: hasAvatar
                   ? NetworkImage(
-                      "https://firebasestorage.googleapis.com/v0/b/tiktok-jiun-zxc.appspot.com/o/avatar%2F$uid?alt=media")
+                      // 이미지를 얻으면 기본적으로 캐싱을 하고 있어 두번째 이미지 수정시 변경된 이미지로 바뀌지 않는 문제가 있다.
+                      // 캐싱 문제를 해결하기 위해 nocache 파라메터를 사용한다.
+                      "https://firebasestorage.googleapis.com/v0/b/tiktok-jiun-zxc.appspot.com/o/avatar%2F$uid?alt=media&nocache=${DateTime.now().toString()}",
+                    )
                   : null,
               child: Text(name), // 데이터 출력
             ),
