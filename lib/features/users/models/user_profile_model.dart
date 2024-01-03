@@ -4,6 +4,7 @@ class UserProfileModel {
   final String name;
   final String bio;
   final String link;
+  final bool hasAvatar;
 
   UserProfileModel({
     required this.uid,
@@ -11,6 +12,7 @@ class UserProfileModel {
     required this.name,
     required this.bio,
     required this.link,
+    required this.hasAvatar,
   });
 
   UserProfileModel.empty()
@@ -18,7 +20,8 @@ class UserProfileModel {
         email = "",
         name = "",
         bio = "",
-        link = "";
+        link = "",
+        hasAvatar = false;
 
   // Json 데이타를 객체로 변환한다.
   UserProfileModel.fromJson(Map<String, dynamic> json)
@@ -26,7 +29,8 @@ class UserProfileModel {
         email = json["email"],
         name = json["name"],
         bio = json["bio"],
-        link = json["link"];
+        link = json["link"],
+        hasAvatar = json["hasAvatar"] ?? false;
 
   // Firesotre 저장을 위한 Json 변환한다.
   Map<String, String> toJson() {
@@ -37,5 +41,24 @@ class UserProfileModel {
       "bio": bio,
       "link": link,
     };
+  }
+
+  // 입력된 매개변수만 제외하고 이전에 가지고 있던 값으로 UserProfileModel을 반환한다.
+  UserProfileModel copyWith({
+    String? uid,
+    String? email,
+    String? name,
+    String? bio,
+    String? link,
+    bool? hasAvatar,
+  }) {
+    return UserProfileModel(
+      uid: uid ?? this.uid,
+      email: email ?? this.email,
+      name: name ?? this.name,
+      bio: bio ?? this.bio,
+      link: link ?? this.link,
+      hasAvatar: hasAvatar ?? this.hasAvatar,
+    );
   }
 }

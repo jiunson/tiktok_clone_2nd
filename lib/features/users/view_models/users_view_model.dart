@@ -13,7 +13,7 @@ class UsersViewModel extends AsyncNotifier<UserProfileModel> {
   @override
   FutureOr<UserProfileModel> build() async {
     // Test용 딜레이 코드
-    await Future.delayed(const Duration(seconds: 10));
+    // await Future.delayed(const Duration(seconds: 10));
 
     // UserRepository 초기화
     _usersRepository = ref.read(userRepo);
@@ -46,6 +46,7 @@ class UsersViewModel extends AsyncNotifier<UserProfileModel> {
     final profile = UserProfileModel(
       uid: credential.user!.uid,
       name: credential.user!.displayName ?? "Anon",
+      hasAvatar: false,
       email: credential.user!.email ?? "anon@anon.com",
       bio: "undefined",
       link: "undefined",
@@ -57,9 +58,22 @@ class UsersViewModel extends AsyncNotifier<UserProfileModel> {
     // state에 유저프로필 데이터를 설정한다. 프로필 화면에서 보여줄 수 있다.
     state = AsyncValue.data(profile);
   }
+
+  // 아바타 프로필 정보를 업데이트 한다.
+  Future<void> onAvatarUpload() async {
+    if (state.value == null) return;
+
+    // 새로운 UserProfileModel로 state를 업데이트 한다.
+    // state를 업데이트하면 화면이 새로고침된다.
+    state = AsyncValue.data(state.value!.copyWith(hasAvatar: true));
+
+    // firestore 정보를 업데이트한다.
+    // 업데이트하고 싶은 값만 보낸다.
+    await _usersRepository.updateUser(state.value!.uid, {"hasAvatar": true});
+  }
 }
 
-// Notifier 프로바이더 제공한다.
+// 사용자 프로필 Notifier 프로바이더 제공한다.
 final usersProvider = AsyncNotifierProvider<UsersViewModel, UserProfileModel>(
   () => UsersViewModel(),
 );

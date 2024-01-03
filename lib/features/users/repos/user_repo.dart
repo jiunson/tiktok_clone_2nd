@@ -28,6 +28,11 @@ class UserRepository {
     final fileRef = _storage.ref().child("avatar/$fileName");
     await fileRef.putFile(file);
   }
+
+  // 프로필을 업데이트한다.
+  Future<void> updateUser(String uid, Map<String, dynamic> data) async {
+    await _db.collection("users").doc(uid).update(data);
+  }
 }
 
 // repository 클래스를 Provider로 제공한다.
