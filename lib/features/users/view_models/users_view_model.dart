@@ -56,6 +56,7 @@ class UsersViewModel extends AsyncNotifier<UserProfileModel> {
   }
 }
 
+// Notifier 프로바이더 제공한다.
 final usersProvider = AsyncNotifierProvider<UsersViewModel, UserProfileModel>(
   () => UsersViewModel(),
 );
