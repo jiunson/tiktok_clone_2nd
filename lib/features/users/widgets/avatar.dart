@@ -7,8 +7,8 @@ import 'package:tiktok_clone_2nd/features/users/view_models/avarar_view_model.da
 
 class Avatar extends ConsumerWidget {
   final String name;
-  final bool hasAvatar;
-  final String uid;
+  final bool hasAvatar; // 아바타 사용유무
+  final String uid; // firebase 유저ID
 
   const Avatar({
     super.key,
