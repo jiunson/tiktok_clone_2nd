@@ -12,7 +12,16 @@ class TimelineViewModel extends AsyncNotifier<List<VideoModel>> {
     state = const AsyncValue.loading(); // state를 loading state로 설정한다.
     await Future.delayed(const Duration(seconds: 2)); // 2초 지연.
 
-    final newVideo = VideoModel(title: "${DateTime.now()}");
+    final newVideo = VideoModel(
+      title: "${DateTime.now()}",
+      description: "",
+      fileUrl: "",
+      thumbnailUrl: "",
+      creatorUid: "",
+      likes: 0,
+      comments: 0,
+      createAt: 0,
+    );
 
     // 새 비디오 추가
     // 기존 데이터 + 새로운 데이터를 추가 후 AsyncValue.data()로 state에 새로운 값을 넣어준다.
