@@ -7,25 +7,29 @@ class TimelineViewModel extends AsyncNotifier<List<VideoModel>> {
   List<VideoModel> _list = [];
 
   // 비즈니스 로직 작성
+  // UploadVideoViewModel.uploadVideo() 함수로 변경되서 사용 안한다.
   Future<void> uploadVideo() async {
     // 시뮬레이션으로 강제 지연 설정
     state = const AsyncValue.loading(); // state를 loading state로 설정한다.
     await Future.delayed(const Duration(seconds: 2)); // 2초 지연.
 
-    final newVideo = VideoModel(
-      title: "${DateTime.now()}",
-      description: "",
-      fileUrl: "",
-      thumbnailUrl: "",
-      creatorUid: "",
-      likes: 0,
-      comments: 0,
-      createAt: 0,
-    );
+    // 테스트용 데이터
+    // final newVideo = VideoModel(
+    //   title: "${DateTime.now()}",
+    //   description: "",
+    //   fileUrl: "",
+    //   thumbnailUrl: "",
+    //   creatorUid: "",
+    //   likes: 0,
+    //   comments: 0,
+    //   createAt: 0,
+    // );
+
+    // 기존 데이터 + 새로운 데이터를 추가 후 AsyncValue.data()로 state에 새로운 값을 넣어준다.
+    // _list = [..._list, newVideo];
 
     // 새 비디오 추가
-    // 기존 데이터 + 새로운 데이터를 추가 후 AsyncValue.data()로 state에 새로운 값을 넣어준다.
-    _list = [..._list, newVideo];
+    _list = [..._list];
     state = AsyncValue.data(_list);
   }
 
